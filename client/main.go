@@ -12,7 +12,7 @@ import (
 )
 
 func main(){
-	conn,err:= grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn,err:= grpc.Dial("localhost:3000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err!=nil{
 		log.Fatalf("Failed to connect:%v", err)
 	}
@@ -20,9 +20,10 @@ func main(){
 	client:= pb.NewHelloWorldServiceClient(conn)
 	ctx, cancel:= context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	res, err:=client.SayHello(ctx, $pb.He&pb.HelloRequest{Name: "Alice"})
+	res, err:=client.SayHello(ctx, &pb.HelloRequest{Name: "Alice"})
+	
 	if err!=nil{
 		log.Fatalf("Error Calling SayHello: %v", err)
-		log.Printf("Server Response: %s", res.Message)
 	}
+	log.Printf("Server Response: %s", res.Message)
 }
