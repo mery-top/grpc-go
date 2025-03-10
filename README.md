@@ -1,1 +1,1 @@
-GRPC server using GO
+GRPC Server using GO
